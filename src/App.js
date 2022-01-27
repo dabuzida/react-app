@@ -7,6 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         Hello, React!!
+        git reset --hard commit
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
