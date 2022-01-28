@@ -1,14 +1,25 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import React, { Component } from 'react';
 import './App.css';
+
+
+class Subject extends Component{
+  render(){
+    return (
+      <header>
+            <h1>WEB</h1>
+            world wide web!
+        </header>
+
+    );
+  }
+}
 
 class App extends Component {
   render(){
     return (
       <div className="App">
-        Hello, React!!
-        git reset --hard commit
-        goodbye
+        <Subject></Subject>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
