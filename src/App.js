@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Subject from "./components/Subject"
 import TOC from "./components/TOC"
 import Content from "./components/Content"
-import PenList from './components/PenList';
+import FEFW from './components/FEFW';
 import './App.css';
 
 class App extends Component {
@@ -19,10 +19,11 @@ class App extends Component {
         {id:2, title:'CSS', desc:'CSS is for design'},
         {id:3, title:'JavaScirpt', desc:'JavaScirpt is for interactive'}
       ],
-      pen:[
-        {id:1, brand:'sharp', madeIn:'Japan'},
-        {id:2, brand:'monami', madeIn:'Korea'},
-        {id:3, brand:'pentel', madeIn:'Japan'},
+      framework:[
+        {id:1, title:'Angular', rank: 1},
+        {id:2, title:'React', rank: 2},
+        {id:3, title:'Vue', rank: 3},
+        {id:4, title:'Ember', rank: 4},
       ],
     }
         
@@ -69,13 +70,9 @@ class App extends Component {
           }.bind(this)}
           data={this.state.contents} />
         <Content title={_title} desc={_desc} />
-        <PenList
-          data={this.state.pen}
-          myEvent={function(){
-
-          }}
-          
-        ></PenList>
+        <FEFW
+          data={this.state.framework}
+        />
     </div>
     )
   }

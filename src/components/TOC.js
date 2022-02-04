@@ -21,6 +21,7 @@ class TOC extends Component{
           </li>)
         i = i + 1;
       }
+      console.log(lists);
       return (
         <nav>
             <ul>
