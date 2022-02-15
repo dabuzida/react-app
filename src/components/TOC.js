@@ -24,7 +24,8 @@ class TOC extends Component{
       console.log(lists);
       return (
         <nav>
-            <ul>
+          <h4 style={{"color": "green", "margin": 0}}>읽을목록</h4>
+            <ul style={{"margin":0}}>
                 {lists} 
                 {/*  lists는  [ <li> ... </li> ] 식인데 같은결과
                 <li><a href="1.html">HTML</a></li>
