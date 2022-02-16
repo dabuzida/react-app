@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Subject from "./components/Subject";
 import TOC from "./components/TOC";
 import CreateContent from "./components/CreateContent";
+import UpdateContent from "./components/UpdateContent";
 import ReadContent from "./components/ReadContent";
 import Control from "./components/Control";
 import "./App.css";
@@ -12,7 +13,7 @@ class App extends Component {
     super(props);
     this.max_content_id = 3;
     this.state = {
-      mode: "create",
+      mode: "welcome",
       selected_content_id: 1,
       subject: { title: "WEB", sub: "world wide web!" },
       welcome: { title: "Welcome", desc: "Hello, React!!" },
@@ -23,49 +24,64 @@ class App extends Component {
       ],
     };
   }
-  render() {
-    var _title,
-      _desc,
-      _article = null;
+  getReadContent(){
+    let data = this.state.contents.filter(
+      (e) => e.id === this.state.selected_content_id
+    )[0];
+    return data;
+  }
+  getContent(){
+    let _title = null;
+    let _desc = null;
+    let _article = null;
     if (this.state.mode === "welcome") {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc} />;
     } else if (this.state.mode === "read") {
-      let ans = this.state.contents.filter(
-        (e) => e.id === this.state.selected_content_id
-      )[0];
-      _title = ans.title;
-      _desc = ans.desc;
-      _article = <ReadContent title={_title} desc={_desc} />;
-
-      // let i=0;
-      // while(i < this.state.contents.length){
-      //   let data = this.state.contents[i];
-      //   if(data.id === this.state.selected_content_id){
-      //     _title = data.title;
-      //     _desc = data.desc;
-      //     break;
-      //   }
-      //   i = i + 1;
-      // }
+      let _content = this.getReadContent();
+      _article = <ReadContent title={_content.title} desc={_content.desc} />;
     } else if (this.state.mode === "create") {
       _article = (
         <CreateContent
           onSubmit={function (_title, _desc) {
             this.max_content_id++;
-            let _contents = this.state.contents.concat({
-              id: this.max_content_id,
-              title: _title,
-              desc: _desc,
-            });
+            let _contents = Array.from(this.state.contents);
+            _contents.push({id: this.max_content_id, title: _title, desc: _desc});
+            
             this.setState({
               contents: _contents,
+              mode: "read",
+              selected_content_id: this.max_content_id,
+            });
+          }.bind(this)}
+        />
+      );
+    } else if (this.state.mode === "update") {
+      let _content = this.getReadContent();
+      _article = (
+        <UpdateContent
+          data={_content}
+          onSubmit={function (_id, _title, _desc) {
+            let _contents = Array.from(this.state.contents);
+            for(let key in  _contents){
+              if(_contents[key].id === _id){
+                _contents[key] = {id: _id, title: _title, desc: _desc,}
+                break;
+              }
+            }
+            this.setState({
+              contents: _contents,
+              mode: 'read',
             });
           }.bind(this)}
         />
       );
     }
+    return _article;
+  }
+  render() {
+    console.log("App.js render");
     return (
       <div className="App">
         <Subject
@@ -82,9 +98,22 @@ class App extends Component {
         </div>
         <Control
           onChangeMode={function (mode) {
-            this.setState({
-              mode,
-            });
+            if(mode === 'delete'){
+              let _contents;
+              if(window.confirm('really?')){
+                _contents = this.state.contents.filter
+                (e => e.id !== this.state.selected_content_id);
+                this.setState({
+                  mode:'welcome',
+                  contents: _contents,
+                });
+                setTimeout(function(){alert("deleted!!!")}, 500);
+              }
+            } else{
+              this.setState({
+                mode,
+              })
+            }
           }.bind(this)}
         />
         <TOC
@@ -98,7 +127,7 @@ class App extends Component {
         />
         <hr style={{ color: "black" }}></hr>
         <div style={{ color: "green" }}>결과창</div>
-        {_article}
+        {this.getContent()}
       </div>
     );
   }
