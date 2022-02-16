@@ -10,11 +10,19 @@ class UpdateContent extends Component{
         this.inputFormHandler = this.inputFormHandler.bind(this);
     }
     inputFormHandler(e){
+        console.log(e)
+        // debugger;
+        console.log(2)
+
         this.setState({[e.target.name]:e.target.value});
+        console.log(3)
+
     }
     render(){
       console.log("UpdateContent render");
-      console.log(this.props.data);
+    //   console.log(this.props.data);
+        console.log(this.state.title);
+
       return (
         <article>
             <h4 style={{"color": "green", "margin": 0}}>Update</h4>
@@ -37,7 +45,12 @@ class UpdateContent extends Component{
                         name="title" 
                         placeholder="title" 
                         value={this.state.title}
-                        onChange={this.inputFormHandler} // input안의 값이 바뀔때 onChange실행
+                        onChange={this.inputFormHandler} 
+                        // input안의 값이 바뀔때 onChange실행
+                        // inputFormHandler(e){
+                        //     this.setState({[e.target.name]:e.target.value});
+                        // }
+
                         //     function(e){
                         //     this.setState({title: e.target.value,});
                         // }.bind(this)}
